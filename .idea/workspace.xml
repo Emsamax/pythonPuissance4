@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6613adc-ec75-4b1a-95e6-0268d88569af" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/EntreesSorties.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IA.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Initialisation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Jouer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Verification.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EntreesSorties.py" beforeDir="false" afterPath="$PROJECT_DIR$/EntreesSorties.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Initialisation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Initialisation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,23 +36,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.Jouer.executor": "Run",
-    "Python.Main.executor": "Run",
-    "Python.Verification.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/emsam/OneDrive/Documents/GitHub/pythonPuissance4/Main.py",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.Jouer.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Main.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Verification.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/emsam/OneDrive/Documents/GitHub/pythonPuissance4/Main.py&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Main.py" type="PythonConfigurationType" factoryName="Python">
       <module name="pythonPuissance4" />
@@ -98,7 +97,11 @@
       <updated>1703066529340</updated>
       <workItem from="1703066539115" duration="61000" />
       <workItem from="1703066652672" duration="30000" />
-      <workItem from="1703066935497" duration="3205000" />
+      <workItem from="1703066935497" duration="4904000" />
+      <workItem from="1703077865078" duration="1041000" />
+      <workItem from="1703079440398" duration="503000" />
+      <workItem from="1703080444984" duration="939000" />
+      <workItem from="1703081987638" duration="1293000" />
     </task>
     <servers />
   </component>
@@ -120,5 +123,6 @@
     <SUITE FILE_PATH="coverage/pythonPuissance4$Jouer.coverage" NAME="Jouer Coverage Results" MODIFIED="1703069914317" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythonPuissance4$Verification.coverage" NAME="Verification Coverage Results" MODIFIED="1703069962504" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythonPuissance4$Main.coverage" NAME="Main Coverage Results" MODIFIED="1703070026570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythonPuissance4$Main_py.coverage" NAME="Main.py Coverage Results" MODIFIED="1703070899211" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

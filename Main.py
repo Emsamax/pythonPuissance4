@@ -3,4 +3,3 @@ import Initialisation
 from Jouer import *
 from Initialisation import *
 print(testSupp())
-
