@@ -3,7 +3,7 @@
 from EntreesSorties import *
 from Verification import *
 from IA import *
-import typing
+from typing import TypeAlias, Type
 
 
 def testSupp() -> str:
