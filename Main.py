@@ -2,8 +2,7 @@
 # from Jouer import *
 from Initialisation import *
 from EntreesSorties import *
+from Types import *
 from typing import TypeAlias, Type
-
-print(testSupp())
 
 afficherEtatJeu(initialisation(True))
