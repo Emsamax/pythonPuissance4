@@ -4,6 +4,7 @@
 from Types import TData, TJoueur, TGrilleMat
 from EntreesSorties import initialisationManueleJoueur, initialisationManueleJoueurIA, saisirTailleMat
 
+
 # La fonction initialisation crée et initialise les entitées nécéssaires au fonctionnement du jeu
 # si le parametre jeuRapide = True alors on initialise la partie avec des attributs par défauts
 # la fonction retourne la structure de donnée data
@@ -20,8 +21,8 @@ def initialisation(jeuRapide: bool) -> TData:
         nouvelleData.append(initialiserTGrilleMat(lignesEtColonnes[0], lignesEtColonnes[1]))
         nouvelleData.append(initialiserJoueur(True))
         nouvelleData.append(initialiserJoueurIA(True))
-        nouvelleData[3] = True
-
+        nouvelleData.append(True)
+        return nouvelleData
 
 
 # renvoi un type TGrilleMat initialisé en fonction du nb de lignes et colonnes passés en parametre
@@ -30,7 +31,7 @@ def initialiserTGrilleMat(nbLignes: int, nbColonnes: int) -> TGrilleMat:
     res: TGrilleMat = []
     if (nbLignes & nbColonnes) != 0:
         for i in range(nbLignes):
-            res.append(['0' for _ in range(nbColonnes)])
+            res.append(['.' for _ in range(nbColonnes)])
         return res
     else:
         for i in range(8):
@@ -42,8 +43,9 @@ def initialiserTGrilleMat(nbLignes: int, nbColonnes: int) -> TGrilleMat:
 def initialiserJoueur(saisieManuel: bool) -> TJoueur:
     res: TJoueur = []
     if saisieManuel:  # cas ou on demande manuelement à l'utilisateur si il veut un coup sepcial et son pion
-        res.append(initialisationManueleJoueur()[0])
-        res.append(initialisationManueleJoueur()[1])
+        listInfoJoueur: list[bool, str] = initialisationManueleJoueur()
+        res.append(listInfoJoueur[0])
+        res.append(listInfoJoueur[1])
         res.append(0)
         return res
     else:
@@ -58,14 +60,13 @@ def initialiserJoueurIA(saisieManuel: bool) -> TJoueur:
     res: TJoueur = []
     if saisieManuel:  # cas ou on demande manuelement à l'utilisateur si il veut que l'ia ait un coup sepcial et
         # son pion
-        res.append(initialisationManueleJoueurIA()[0])
-        res.append(initialisationManueleJoueur()[1])
-        res.append(initialisationManueleJoueur()[2])
+        listInfoJoueurIa: list[bool, str, int] = initialisationManueleJoueurIA()
+        res.append(listInfoJoueurIa[0])
+        res.append(listInfoJoueurIa[1])
+        res.append(listInfoJoueurIa[2])
         return res
     else:
         res.append(True)
         res.append('x')
         res.append(1)
         return res
-
-

@@ -5,4 +5,4 @@ from EntreesSorties import *
 from Types import *
 from typing import TypeAlias, Type
 
-afficherEtatJeu(initialisation(True))
+afficherEtatJeu(initialisation(False))

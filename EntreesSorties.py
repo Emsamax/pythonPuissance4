@@ -34,11 +34,12 @@ def saisirTailleMat() -> list[int]:
     valide = False
     while not valide:
         entreeNbLignes = input("saisir nb lignes de la grille")
-        res[0] = int(entreeNbLignes)
+        res.append(int(entreeNbLignes))
         entreeNbColonnes = input("saisir nb colonnes de la grille")
-        res[1] = int(entreeNbColonnes)
-        if (res[0] & res[1] <= 0)():
+        res.append(int(entreeNbColonnes))
+        if res[0] <= 0 | res[1] <= 0:
             print("Erreur : La grille ne peut pas etre sous la forme 0*X ")
+            res.clear()
         else:
             valide = True
     return res
