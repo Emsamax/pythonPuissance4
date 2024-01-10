@@ -27,6 +27,5 @@ TData: TypeAlias = list[TGrilleMat, TJoueur, TJoueur, bool]
 
 #liste qui sauvegarde tous les etats du jeu : le dernier coup joué est le dernier element de la liste
 TSauvegardeEtatJeu: TypeAlias = list[TData]
-
 # Cet Alias repésente un coup sous la forme : le joueur qui l'a joué, la ligne et la colonne du coup
 TCoup: TypeAlias = list[TJoueur, list[1]]

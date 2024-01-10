@@ -44,6 +44,14 @@ def saisirTailleMat() -> list[int]:
             valide = True
     return res
 
+def afficherErreurSaisieColonne(colonne: int) -> None:
+    print("Erreur: plus de place dans la colonne n°" + str(colonne))
+
+def afficherErreurUndo() -> None:
+    print("Impossible de revenir en arriere")
+
+def demanderColonne()  -> int:
+    return int(input("le numero de la colonne"))
 
 def afficherEtatJeu(data: TData) -> None:
     print("[    grille : \n")
@@ -54,3 +62,5 @@ def afficherEtatJeu(data: TData) -> None:
     print("Joueur : " + str(data[1]))
     print("JoueurIA : " + str(data[2]))
     print("tour du joueur : " + str(data[3]) + "    ]")
+    print("------------------------------")
+

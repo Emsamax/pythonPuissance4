@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6613adc-ec75-4b1a-95e6-0268d88569af" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/pythonPuissance4.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pythonPuissance4.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EntreesSorties.py" beforeDir="false" afterPath="$PROJECT_DIR$/EntreesSorties.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Initialisation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Initialisation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Jouer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Jouer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Types.py" beforeDir="false" afterPath="$PROJECT_DIR$/Types.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Verification.py" beforeDir="false" afterPath="$PROJECT_DIR$/Verification.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +86,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-67fca87a943a-c986f194a52a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.11799.259" />
+        <option value="bundled-python-sdk-50da183f06c8-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13135.95" />
       </set>
     </attachedChunks>
   </component>
@@ -110,7 +110,18 @@
       <workItem from="1704592491181" duration="91000" />
       <workItem from="1704633943683" duration="9957000" />
       <workItem from="1704650550442" duration="108000" />
-      <workItem from="1704706973594" duration="2153000" />
+      <workItem from="1704706973594" duration="6522000" />
+      <workItem from="1704721622927" duration="568000" />
+      <workItem from="1704722504168" duration="513000" />
+      <workItem from="1704723059909" duration="1027000" />
+      <workItem from="1704724193113" duration="170000" />
+      <workItem from="1704724369410" duration="64000" />
+      <workItem from="1704724517631" duration="480000" />
+      <workItem from="1704725028013" duration="1110000" />
+      <workItem from="1704880170086" duration="7105000" />
+      <workItem from="1704900403209" duration="816000" />
+      <workItem from="1704901255660" duration="46000" />
+      <workItem from="1704901363599" duration="9444000" />
     </task>
     <servers />
   </component>
@@ -155,6 +166,6 @@
     <SUITE FILE_PATH="coverage/pythonPuissance4$Jouer.coverage" NAME="Jouer Coverage Results" MODIFIED="1703069914317" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythonPuissance4$Verification.coverage" NAME="Verification Coverage Results" MODIFIED="1703069962504" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythonPuissance4$Main.coverage" NAME="Main Coverage Results" MODIFIED="1703070026570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/pythonPuissance4$Main_py.coverage" NAME="Main.py Coverage Results" MODIFIED="1704709085328" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/pythonPuissance4$Main_py.coverage" NAME="Main.py Coverage Results" MODIFIED="1704915379350" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
