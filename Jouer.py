@@ -48,20 +48,10 @@ def creerCoup(data: TData, joueur: TJoueur) -> TCoup:
 # Appel de la fonction de sauvegarde pour enregistrer l'etat du jeu une fois le coup joué
 def placerPion(data: TData, coup: TCoup) -> TData:
     grille: TGrilleMat = data[0]
-
     positions: list[1] = coup[1]
     print(positions)
-
-    # print("dans placer pion position X :", coup[1][1])
-
-    # posX: int = coup[1][0]
-    # print("dans placer pion position X : ", posX)
-    # posY: int = coup[1][1]
-    # print(posX)
-    # print(posY)
     joueur: TJoueur = coup[0]
     # le pion du joueur est à la position 1
-
     pion: str = str(joueur[1])
     grille[positions[0]][positions[1]] = pion
     # inversement de la valeur du bool qui indique si c'est au joueur non IA de jouer
