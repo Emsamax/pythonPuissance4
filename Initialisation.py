@@ -11,7 +11,8 @@ from EntreesSorties import initialisationManueleJoueur, initialisationManueleJou
 def initialisation(jeuRapide: bool) -> TData:
     nouvelleData: TData = TData()
     if jeuRapide:
-        nouvelleData.append(initialiserTGrilleMat(0, 0))
+        # Grille 8x8 par défaut
+        nouvelleData.append(initialiserTGrilleMat(8, 8))
         nouvelleData.append(initialiserJoueur(False))
         nouvelleData.append(initialiserJoueurIA(False))
         nouvelleData.append(True)
@@ -27,16 +28,22 @@ def initialisation(jeuRapide: bool) -> TData:
 
 # renvoi un type TGrilleMat initialisé en fonction du nb de lignes et colonnes passés en parametre
 # si les 2 valent 0 alors la grille est initialisée en 8*8
+#def initialiserTGrilleMat(nbLignes: int, nbColonnes: int) -> TGrilleMat:
+#    res: TGrilleMat = []
+#    if (nbLignes & nbColonnes) != 0:
+#        for i in range(nbLignes):
+#            res.append(['.' for _ in range(nbColonnes)])
+#        return res
+#    else:
+#        for i in range(8):
+#            res.append(['.' for _ in range(8)])
+#        return res
+
 def initialiserTGrilleMat(nbLignes: int, nbColonnes: int) -> TGrilleMat:
     res: TGrilleMat = []
-    if (nbLignes & nbColonnes) != 0:
-        for i in range(nbLignes):
-            res.append(['.' for _ in range(nbColonnes)])
-        return res
-    else:
-        for i in range(8):
-            res.append(['.' for _ in range(8)])
-        return res
+    for i in range(nbLignes):
+        res.append(['.' for _ in range(nbColonnes)])
+    return res
 
 
 # initialise un joueur , possibilité de saisir les  valeurs à l'initialisation

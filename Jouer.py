@@ -2,17 +2,41 @@
 from Verification import *
 from Types import *
 from EntreesSorties import *
+from Initialisation import *
+
+# -- Varibale Global Initialisation --#
+data: TData = initialisation(True)
+
+def jouer (data: TData, colonne: int) -> tuple:
+    gagner = False
+    joueurActuel: TJoueur
+    if data[3]:
+        joueurActuel = data[1]
+    else:
+        joueurActuel = data[2]
+    if not testColonnePleine(data[0], colonne):
+        dernierCoup: TCoup = creerCoup(data, joueurActuel, colonne)
+        afficherEtatJeu(placerPion(data, dernierCoup))
+        if victoire(data[0], dernierCoup):
+            print(" ==== Victoire joueur : ", joueurActuel, " ==== \n")
+            gagner = True
+
+        return dernierCoup[1][0], gagner
+    return ()
+
+
+def testColonnePleine(grille, colonne: int):
+    if grille[0][colonne] != ".":
+        return True
+    return False
 
 
 def plusBassePosition(data: TData, colonne: int) -> int:
     grille: TGrilleMat = data[0]
-    joueur: TJoueur = data[1]
-    joueurIA: TJoueur = data[2]
     # recupere la hauteur de la grille auquel on -1 se qui donne le numero de la derniere ligne
-    hauteurGrille: int = len(grille[1]) - 1
+    hauteurGrille: int = len(grille) - 1
     hauteurGrilleActuelle: int = hauteurGrille
     print("hauteur grille = ", hauteurGrille)
-    i: int = hauteurGrilleActuelle
     # boucle sur la grille de bas en haut, on s'arette seulement si on tombe sur un "."
     while (grille[hauteurGrilleActuelle][colonne] != ".") | (hauteurGrilleActuelle == -1):
         if hauteurGrilleActuelle == 0:
@@ -24,13 +48,12 @@ def plusBassePosition(data: TData, colonne: int) -> int:
     return hauteurGrilleActuelle
 
 
-
 # crée un coup à partir d'un joueur et d'une colonne = le joueur joue dans cette colonne
 # place le pions le plus bas possible dans la colonne
 # on suppose q'il à été vérifié avant si il restait de la place dans cette colonne
-def creerCoup(data: TData, joueur: TJoueur) -> TCoup:
-    colonne: int = demanderColonne()
+def creerCoup(data: TData, joueur: TJoueur, colonne: int) -> TCoup:
     ligne = plusBassePosition(data, colonne)
+    print("LIGNE : ", ligne)
     if ligne != -1:
         coupActuel: TCoup = []
         pos: list[1] = [ligne, colonne]
@@ -39,9 +62,10 @@ def creerCoup(data: TData, joueur: TJoueur) -> TCoup:
         coupActuel.append(pos)
         print("coup effectué", pos)
         return coupActuel
-    else:
-        afficherErreurSaisieColonne(colonne)
-        return creerCoup(data, joueur)
+    return []
+    #afficherErreurSaisieColonne(colonne)
+    #return creerCoup(data, joueur, colonne)
+
 
 
 # place le pion dans une colonne et met a jour la structure data
@@ -49,9 +73,10 @@ def creerCoup(data: TData, joueur: TJoueur) -> TCoup:
 def placerPion(data: TData, coup: TCoup) -> TData:
     grille: TGrilleMat = data[0]
     positions: list[1] = coup[1]
-    print(positions)
+    print("position : ", positions)
     joueur: TJoueur = coup[0]
     # le pion du joueur est à la position 1
+    #print("test : ", joueur)
     pion: str = str(joueur[1])
     grille[positions[0]][positions[1]] = pion
     # inversement de la valeur du bool qui indique si c'est au joueur non IA de jouer
@@ -62,8 +87,10 @@ def placerPion(data: TData, coup: TCoup) -> TData:
 
 
 # supme un colonne
-def coupSpecial(data: TData) -> TData:
-    return data
+def coupSpecial(data: TData, colonne: int) -> None:
+    for i in range(len(data[0])):
+        data[0][i][colonne] = '.'
+    return None
 
 
 # enregistre l'etat du jeu dans la liste TsauvegardeJeu
