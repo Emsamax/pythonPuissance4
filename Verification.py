@@ -1,6 +1,9 @@
-# Le module Verification contient toutes les fonctions de vérification qui permettent de valider si le coup
-# est valide ou non.
-# Fonctions de victoire et abandon
+"""!
+    @file Verification.py
+    @brief Le module Verification contient toutes les fonctions de vérification qui permettent de valider si le coup
+    est valide ou non.
+"""
+
 
 from Types import *
 from EntreesSorties import *
@@ -8,6 +11,13 @@ from EntreesSorties import *
 
 # renvoie True si le dernier joueur qui à joué a remporté la partie
 def victoire(grille: TGrilleMat, dernierCoupJoue: TCoup) -> bool:
+    """!
+        @brief Vérifie si le dernier joueur qui a joué a remporté la partie.
+
+        @param grille: La grille du jeu.
+        @param dernierCoupJoue: Les informations sur le dernier coup joué (joueur, position).
+        @return: True si le dernier joueur a remporté la partie, sinon False.
+        """
     if (verifierVictoireColonne(grille, dernierCoupJoue) | verifierVictoireLigne(grille, dernierCoupJoue) |
             verifierVictoireDiagonale1(grille, dernierCoupJoue) | verifierVictoireDiagonale2(grille, dernierCoupJoue)):
         return True
@@ -16,6 +26,13 @@ def victoire(grille: TGrilleMat, dernierCoupJoue: TCoup) -> bool:
 
 # verifie si à partir du pion joué si il est gagnant sur la colonne
 def verifierVictoireColonne(grille: TGrilleMat, dernierCoupJoue: TCoup) -> bool:
+    """!
+       @brief Vérifie si le dernier joueur a gagné en colonne.
+
+       @param grille: La grille du jeu.
+       @param dernierCoupJoue: Les informations sur le dernier coup joué (joueur, position).
+       @return: True si le dernier joueur a gagné en colonne, sinon False.
+       """
     colonneGagante: bool = False
     # la colonne du dernier coup joué se trouve TCoup[Tjoueur list[ligne, colonne]] ligne et colonne sont des int
     colonneSaisie: int = dernierCoupJoue[1][1]
@@ -39,6 +56,13 @@ def verifierVictoireColonne(grille: TGrilleMat, dernierCoupJoue: TCoup) -> bool:
 
 # verifie si à partir du pion joué si il est gagnant sur la ligne
 def verifierVictoireLigne(grille: TGrilleMat, dernierCoupJoue: TCoup) -> bool:
+    """!
+        @brief Vérifie si le dernier joueur a gagné en ligne.
+
+        @param grille: La grille du jeu.
+        @param dernierCoupJoue: Les informations sur le dernier coup joué (joueur, position).
+        @return: True si le dernier joueur a gagné en ligne, sinon False.
+        """
     ligneGagante: bool = False
     # la ligne du dernier coup joué se trouve en [0],[0]TCoup[Tjoueur list[ligne, colonne]] ligne et colonne sont des int
     ligneChoisie: int = dernierCoupJoue[1][0]
@@ -62,6 +86,13 @@ def verifierVictoireLigne(grille: TGrilleMat, dernierCoupJoue: TCoup) -> bool:
 # verifie si à partir du pion joué si il est gagnant sur la diagonale.
 # on verifie les diagonales partant de en haut a gauche vers en bas à droite
 def verifierVictoireDiagonale1(grille: TGrilleMat, dernierCoupJoue: TCoup) -> bool:
+    """!
+       @brief Vérifie si le dernier joueur a gagné en diagonale (de gauche à droite).
+
+       @param grille: La grille du jeu.
+       @param dernierCoupJoue: Les informations sur le dernier coup joué (joueur, position).
+       @return: True si le dernier joueur a gagné en diagonale, sinon False.
+       """
     victoire: bool = False
     cordonee: list = dernierCoupJoue[1]
     joueur: TJoueur = dernierCoupJoue[0]
@@ -103,6 +134,13 @@ def verifierVictoireDiagonale1(grille: TGrilleMat, dernierCoupJoue: TCoup) -> bo
 # verifie si à partir du pion joué si il est gagnant sur la diagonale.
 # on verifie les diagonales partant de en haut a droite vers en bas à gauche
 def verifierVictoireDiagonale2(grille: TGrilleMat, dernierCoupJoue: TCoup) -> bool:
+    """!
+       @brief Vérifie si le dernier joueur a gagné en diagonale (de gauche à droite).
+
+       @param grille: La grille du jeu.
+       @param dernierCoupJoue: Les informations sur le dernier coup joué (joueur, position).
+       @return: True si le dernier joueur a gagné en diagonale, sinon False.
+       """
     victoire: bool = False
     cordonee: list = dernierCoupJoue[1]
     joueur: TJoueur = dernierCoupJoue[0]
@@ -130,7 +168,6 @@ def verifierVictoireDiagonale2(grille: TGrilleMat, dernierCoupJoue: TCoup) -> bo
     positionActuelleX: int = posXFinale
     positionActuelleY: int = posYFinale
     # parcour de la diagonale en haut a droite vers en bas a gauche
-    # revoir ne marche pas
     while (positionActuelleX + distance < len(grille[0])) & (positionActuelleY - distance > 0):
         print("distance", distance)
         print(positionActuelleX + distance, positionActuelleY - distance)

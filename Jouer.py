@@ -1,10 +1,20 @@
-# Le module Jouer comporte toutes les fonctions qui permettent de modifier la grille pour jouer
+"""
+@file: Jouer.py
+@brief Le module Jouer comporte toutes les fonctions qui permettent de modifier la grille pour jouer
+"""
 from Verification import *
 from Types import *
 from EntreesSorties import *
 
 
 def plusBassePosition(data: TData, colonne: int) -> int:
+    """
+       @brief Trouve la position la plus basse dans une colonne où le joueur peut placer un pion.
+
+       @param data: Les données du jeu.
+       @param colonne: La colonne dans laquelle le joueur veut placer son pion.
+       @return: La ligne la plus basse disponible pour placer un pion.
+       """
     grille: TGrilleMat = data[0]
     joueur: TJoueur = data[1]
     joueurIA: TJoueur = data[2]
@@ -24,11 +34,15 @@ def plusBassePosition(data: TData, colonne: int) -> int:
     return hauteurGrilleActuelle
 
 
-
-# crée un coup à partir d'un joueur et d'une colonne = le joueur joue dans cette colonne
-# place le pions le plus bas possible dans la colonne
-# on suppose q'il à été vérifié avant si il restait de la place dans cette colonne
 def creerCoup(data: TData, joueur: TJoueur) -> TCoup:
+    """
+       @brief Crée un coup à partir d'un joueur et d'une colonne. Le joueur joue dans cette colonne. Place le pion le
+       plus bas possible dans la colonne. 0n suppose qu'il à été vérifié avant si il restait de la place dans cette colonne.
+
+       @param data: Les données du jeu.
+       @param joueur: Le joueur effectuant le coup.
+       @return: Le coup créé.
+       """
     colonne: int = demanderColonne()
     ligne = plusBassePosition(data, colonne)
     if ligne != -1:
@@ -44,9 +58,17 @@ def creerCoup(data: TData, joueur: TJoueur) -> TCoup:
         return creerCoup(data, joueur)
 
 
-# place le pion dans une colonne et met a jour la structure data
-# Appel de la fonction de sauvegarde pour enregistrer l'etat du jeu une fois le coup joué
+
+
 def placerPion(data: TData, coup: TCoup) -> TData:
+    """
+    @brief Place le pion dans une colonne et met à jour la structure de données.
+    Appel de la fonction de sauvegarde pour enregistrer l'etat du jeu une fois le coup joué
+
+    @param data: Les données du jeu.
+    @param coup: Le coup à jouer.
+    @return: Les données du jeu mises à jour.
+    """
     grille: TGrilleMat = data[0]
     positions: list[1] = coup[1]
     print(positions)
@@ -66,15 +88,24 @@ def coupSpecial(data: TData) -> TData:
     return data
 
 
-# enregistre l'etat du jeu dans la liste TsauvegardeJeu
 def sauvegarderEtatDuJeu(data: TData) -> None:
+    """
+      @brief Enregistre l'état du jeu dans la liste TsauvegardeJeu.
+
+      @param data: Les données du jeu.
+      @return: None
+      """
     sauvegarde: TSauvegardeEtatJeu = []
     sauvegarde.append(data)
     return None
 
 
-# permet au joueur de revenir à son dernier coup joué
 def revenirEnArriere() -> None:
+    """
+       @brief Permet au joueur de revenir à son dernier coup joué.
+
+       @return: None
+       """
     if len(TSauvegardeEtatJeu) <= 1:
         afficherErreurUndo()
     else:
