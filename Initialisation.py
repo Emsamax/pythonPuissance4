@@ -19,7 +19,8 @@ def initialisation(jeuRapide: bool) -> TData:
        """
     nouvelleData: TData = TData()
     if jeuRapide:
-        nouvelleData.append(initialiserTGrilleMat(0, 0))
+        # Grille 8x8 par défaut
+        nouvelleData.append(initialiserTGrilleMat(8, 8))
         nouvelleData.append(initialiserJoueur(False))
         nouvelleData.append(initialiserJoueurIA(False))
         nouvelleData.append(True)
@@ -34,7 +35,7 @@ def initialisation(jeuRapide: bool) -> TData:
 
 
 def initialiserTGrilleMat(nbLignes: int, nbColonnes: int) -> TGrilleMat:
-    """
+ """
        @brief Renvoie un type TGrilleMat initialisé en fonction du nombre de lignes et colonnes passées en paramètre.
 
        Si les deux valeurs sont 0, alors la grille est initialisée en 8x8.
@@ -42,7 +43,7 @@ def initialiserTGrilleMat(nbLignes: int, nbColonnes: int) -> TGrilleMat:
        @param nbLignes: Le nombre de lignes de la grille.
        @param nbColonnes: Le nombre de colonnes de la grille.
        @return: La grille initialisée.
-       """
+  """
     res: TGrilleMat = []
     if (nbLignes & nbColonnes) != 0:
         for i in range(nbLignes):

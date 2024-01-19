@@ -1,36 +1,55 @@
-#------------------#
-#--- Importation --#
+"""! @brief Programme IHM
+ @mainpage Page IHM du puissance 4
+ @section Description programme IHM
+ Interface utilisateur du puissance 4, l'interface se compose de
+ deux sections :
+   - Une partie paramètre
+   - Une partie jeu
+
+ La partie paramètre permet de modifer les valeurs par défauts du jeu,
+ comme la couleur du pion du joueur (jaune ou rouge) ; la taille de la grille et le niveau de l'IA
+
+ La partie jeu permet d'afficher la grille au cours du jeu, de lancer le jeu et de jouer son atout.
+
+ @section Section importation
+ Ce programme utilise les modules ci-dessous:
+ from Initialisation import *
+ import tkinter as tk
+ from tkinter import messagebox
+ from tkinter import ttk
+ from PIL import ImageTk, Image
+ import os
+"""
 
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 from PIL import ImageTk, Image
 import os
+import time
+from Jouer import jouer, data, coupSpecial
+from IA import testIAPoserPion
+from Initialisation import initialiserTGrilleMat
 
-#-- Varibale Global Initialisation --#
+# Fenêtre Tkinter
+window = tk.Tk()
 
 # liste des 3 tailles différentes de jeu
-listeTaille = ["7x6", "8x7", "9x8"]
+listeTaille = ["8x8", "8x7", "9x8"]
 
-#- Grille -#
+# - Grille -#
 # Liste des labels de la grille qui contient les images des pions
 listeLabelGrille = []
 
-#! Variable à modifier car init dans le fichier initialisation.py et son contenu dans des "structures"
+# ! Variable à modifier car init dans le fichier initialisation.py et son contenu dans des "structures"
 # => il faudra importer la "structure" et se sera cet "structure" qui sera modifié
 # Taille de la grille nbLigne x nbColonne
-nbLigne = 7
-nbColonne = 6
+nbLigne = len(data[0])
+nbColonne = len(data[0][0])
 
-# Couleur du pion du joueur
-couleur = 'j'
+# !
 
-# Niveau de jeu
-niveau = "0"
-
-#!
-
-#- Variable de jeu -#
+# - Variable de jeu -#
 # Booléen, Si False => le jeu n'est pas lancé,
 # Sinon Si True => le jeu est lancé
 jeu = False
@@ -42,7 +61,15 @@ frameJeu = None
 # Atout variable
 atoutActive = False
 
-#--------------------------------------------------#
+# Liste des images des pions
+imgPions = [
+    Image.open("/Users/carineraffin-peyloz/Desktop/informatique/3A/pythonPuissance4/img/pion_jaune.jpeg"),
+    Image.open("/Users/carineraffin-peyloz/Desktop/informatique/3A/pythonPuissance4/img/pion_rouge.png"),
+    Image.open("/Users/carineraffin-peyloz/Desktop/informatique/3A/pythonPuissance4/img/pion_blanc.png")
+]
+
+
+# --------------------------------------------------#
 # (Ajouter les menus avec Undo / Redo)
 def initIHM():
     """
@@ -56,7 +83,7 @@ def initIHM():
     :return:
     """
     # Initialise un objet Tkinter
-    window = tk.Tk()
+    global window
     # Configuration
     window.title("Puissance 4")
     window.geometry("960x624")
@@ -66,9 +93,9 @@ def initIHM():
 
     # String Variable
     # Pour Partie Paramètre
-    tailleGrille = tk.StringVar(window, "7x6")
+    tailleGrille = tk.StringVar(window, "8x8")
     couleurChoix = tk.StringVar(window)
-    couleurChoix.set("j")  # initialiser
+    couleurChoix.set("o")  # initialiser
     niveauChoix = tk.StringVar(window)
     niveauChoix.set("1")  # initialiser
 
@@ -84,6 +111,7 @@ def initIHM():
 
     # Affichage Interface
     window.mainloop()
+
 
 def initMenu(self):
     menubar = tk.Menu(self)
@@ -131,8 +159,8 @@ def parametre(self, tailleGrille, couleurChoix, niveauChoix, tour, atoutNb):
     couleurLabel.pack(anchor='w', padx=(20, 0), pady=(20, 10))
     # Radio bouton (couleur : rouge ou jaune)
     # (Ajouter les commandes plus tard de changement de couleur)
-    jauneBtn = tk.Radiobutton(frame1, text="Jaune", variable=couleurChoix, value="j", bg="#D9D9D9")
-    rougeBtn = tk.Radiobutton(frame1, text="Rouge", variable=couleurChoix, value="r", bg="#D9D9D9")
+    jauneBtn = tk.Radiobutton(frame1, text="Jaune", variable=couleurChoix, value="o", bg="#D9D9D9")
+    rougeBtn = tk.Radiobutton(frame1, text="Rouge", variable=couleurChoix, value="x", bg="#D9D9D9")
     # Pack
     jauneBtn.pack(anchor='w', padx=(60, 0))
     rougeBtn.pack(anchor='w', padx=(60, 0))
@@ -181,7 +209,7 @@ def jeuInit(self, tour, atoutNb):
     # Bouton Jeu / Ajout
     # (Ajouter commande de validation des paramètre)
     btnJeu = tk.Button(frame2, text="Joueur", bg="#D9D9D9",
-                       highlightthickness=1, highlightbackground="#D9D9D9", font="TkDefaultFont 16", command=jouer)
+                       highlightthickness=1, highlightbackground="#D9D9D9", font="TkDefaultFont 16", command=jouerCmd)
     btnJeu.pack(side='left', padx=10, pady=20)
     btnAtout = tk.Button(frame2, text="Jouer Atout",
                          bg="#D9D9D9", highlightthickness=1, highlightbackground="#D9D9D9",
@@ -204,23 +232,23 @@ def initGrille():
     # frameGrille : taille 375x375
     # On récupère le nombre de ligne et de colonne
     # On les converti en nombre (int)
-    global nbLigne #= int(tailleGrille.get()[0])
-    global nbColonne #= int(tailleGrille.get()[2])
+    global nbLigne  # = int(tailleGrille.get()[0])
+    global nbColonne  # = int(tailleGrille.get()[2])
     global frameJeu
 
-    newSize = (int(375/nbColonne), int(375/nbLigne))
+    newSize = (int(375 / nbColonne), int(375 / nbLigne))
 
     # Import l'image des pions vide
     # Utilisation de la librairie PIL pour pouvoir utiliser les images avec tkinter
     # Met un objet Image (de la librairie PIL) dans la variable image (ouvre l'image)
-    image = Image.open("img/pion_blanc.png")
+    image = Image.open("/Users/carineraffin-peyloz/Desktop/informatique/3A/pythonPuissance4/img/pion_blanc.png")
     # On redimensionne l'image selon le nombre de colonne et de ligne
     image = image.resize(newSize)
     # On crée un objet ImageTk compatible avec tkinter pour l'affichage
     img = ImageTk.PhotoImage(image)
 
     for j in range(nbColonne):
-        #frameGrille.grid_columnconfigure(j, weight=2)
+        # frameGrille.grid_columnconfigure(j, weight=2)
         # Création du btn pour chaque colone
         # On affecte une action : poserPion, qui prend en paramètre la colonne du bouton
         # ce qui permettra de poser le pion dans la bonne colonne
@@ -231,10 +259,11 @@ def initGrille():
         listLabel = []
         for i in range(nbLigne):
             label = tk.Label(frameJeu, image=img)
-            label.grid(column=j, row=i+1)
+            label.grid(column=j, row=i + 1)
             label.image = img
             listLabel.append(label)
         listeLabelGrille.append(listLabel)
+
 
 def deleteFrameGrille():
     """
@@ -246,7 +275,8 @@ def deleteFrameGrille():
     for widget in frameJeu.winfo_children():
         widget.grid_forget()
 
-#- Commande / action des boutons de la frame des paramètres -#
+
+# - Commande / action des boutons de la frame des paramètres -#
 def validationParametre(tailleGrille, couleurChoix, niveauChoix):
     """
     Fonction qui valide les paramètres et mets à jour les variables
@@ -255,25 +285,35 @@ def validationParametre(tailleGrille, couleurChoix, niveauChoix):
      - niveau de l'IA
     :return: none
     """
+    # Il faut changer la grille de data si changement de nbLigne et nbColonne
     global listeLabelGrille
     global nbLigne
     global nbColonne
-    global couleur
-    global niveau
     global jeu
 
     # Met à jour les paramètres du jeu si le jeux n'est pas lancé
     if not jeu:
-        #- Mise à jour valeur de jeu -#
+        # - Mise à jour valeur de jeu -#
         # On met à jour les variables nbLigne x nbColonne
         nbLigne = int(tailleGrille.get()[0])
         nbColonne = int(tailleGrille.get()[2])
+        data[0] = initialiserTGrilleMat(nbLigne, nbColonne)
+
         # On met à jour la varaible couleur du joueur
         couleur = str(couleurChoix.get())
-        # On met à jour le niveau de jeu de l'IA
-        niveau = str(niveauChoix.get())
+        # Si 'o' alors le joueur joue avec les jaunes et l'ia avec les rouges (cas par défaut)
+        if couleur == 'o':
+            data[1][1] = 'o'
+            data[2][1] = 'x'
+        # Sinon la couleur du joueur est rouge ('x') et l'ia avec les jaunes ('o')
+        else:
+            data[1][1] = 'x'
+            data[2][1] = 'o'
 
-        #- Parti interface -#
+        # On met à jour le niveau de jeu de l'IA
+        data[2][2] = int(niveauChoix.get())
+
+        # - Partie réinitialisation Grille -#
         # Vide listeLabelGrille
         listeLabelGrille = []
         # Vide la frame de la grille
@@ -285,8 +325,9 @@ def validationParametre(tailleGrille, couleurChoix, niveauChoix):
         messagebox.showinfo("Message du jeu", "Vous ne pouvez pas modifier les paramètres du jeu pendant une partie")
 
 
-#- Commande des boutons de la frame de Jeu -#
-def jouer():
+
+# - Commande des boutons de la frame de Jeu -#
+def jouerCmd():
     """
     Fonction qui lance le jeu lorsque le joueur appuie sur le btn jouer
     :return:
@@ -294,6 +335,8 @@ def jouer():
     global jeu
     if not jeu:
         jeu = True
+        messagebox.showinfo("Message du jeu", "Que le meilleur gagne !!")
+
 
 
 def jouerAtout(atoutNb):
@@ -302,17 +345,20 @@ def jouerAtout(atoutNb):
     Ne peut être activé que si le nombre d'atout est différent de 0
     :return:
     """
+    global jeu
     global atoutActive
 
-    if atoutNb.get() == "1":
-        # On joue l'atout
-
-        # L'atout est activé
-        atoutActive = True
-        # Met le nombre d'atout à 0
-        atoutNb.set("0")
+    if jeu:
+        if atoutNb.get() == "1":
+            # L'atout est activé
+            atoutActive = True
+            # Met le nombre d'atout à 0
+            atoutNb.set("0")
+        else:
+            messagebox.showinfo("Message du jeu", "Vous n'avez plus d'atout")
     else:
-        messagebox.showinfo("Message du jeu", "Vous n'avez plus d'atout")
+        messagebox.showinfo("Message du jeu", "Lancer le jeu pour jouer votre atout")
+
 
 def AnunulerJouerAtout(atoutNb):
     """
@@ -329,55 +375,90 @@ def AnunulerJouerAtout(atoutNb):
         atoutActive = False
         atoutNb.set("1")
 
-#-- Action des boutons de jeux de pions sur la grille --#
 
-def poserPion (colonne: int):
-    # Si le jeu est lancé alors on peut poser un pion sinon impossible
-    if jeu:
-        # On change la couleur du pion
-        changerPionCouleur(colonne, 'j')
-    else:
-        messagebox.showinfo("Message du jeu", "Vous devez lancer le jeu pour pouvoir poser un pion")
+# -- Action des boutons de jeux de pions sur la grille --#
 
-def changerPionCouleur(colonne, couleur):
+def changerPionCouleur(colonne, couleur, ligne):
     # Appel des variable global
     global listeLabelGrille
     global nbLigne
     global nbColonne
+    global imgPions
 
-    #Définir la taille de la grille
+    # Définir la taille de la grille
     newSize = (int(375 / nbColonne), int(375 / nbLigne))
-
     # Vazribale 'j' et 'r' à modifier ?
-    if couleur == 'j':
+    if couleur == 'o':
         # Ouvre l'image du pion jaune
-        image = Image.open("img/pion_jaune.jpeg")
-    elif couleur == 'r':
+        image = imgPions[0]
+    elif couleur == 'x':
         # Ouvre l'image du pion rouge
-        image = Image.open("img/pion_rouge.png")
+        image = imgPions[1]
     else:
         # Utilisable pour un undo
-        image = Image.open("img/pion_blanc.png")
+        image = imgPions[2]
 
     # Redimensionner l'image
     image = image.resize(newSize)
     # On crée un objet ImageTk compatible avec tkinter pour l'affichage
     img = ImageTk.PhotoImage(image)
     # On modifie l'image dans le label
-    listeLabelGrille[colonne][6].configure(image=img)
-    listeLabelGrille[colonne][6].image = img
-    # Il faudra récupérer l'indice de la ligne (i) via les autres fonctions
+    listeLabelGrille[colonne][ligne].configure(image=img)
+    listeLabelGrille[colonne][ligne].image = img
 
-#- Fonction Undo -#
+
+def poserPion(colonne: int):
+    # Variable jeu permet de lancer le jeu en appyant sur le boutton jouer
+    global jeu
+    global atoutActive
+    global window
+    # Si le jeu est lancé alors on peut poser un pion sinon impossible
+    if jeu:
+        if atoutActive:
+            #On joue le coup spécial (Atout)
+            coupSpecial(data, colonne)
+
+            for i in range(len(listeLabelGrille)):
+                changerPionCouleur(colonne, '.', i)
+            atoutActive = False
+
+        # On joue le coup du joueur
+        res = jouer(data, colonne)
+        if res != ():
+            # On change la couleur du pion
+            print("Couleur joueur : ", data[3])
+            changerPionCouleur(colonne, data[1][1], res[0])
+            # Joueur a gagné ?
+            if res[1]:
+                jeu = False
+                window.update()
+                messagebox.showinfo("Message de victoire", "Le Joueur __ a gagné !")
+
+            # Autour de l'IA
+            else:
+                # Juste tester si l'IA joue dans une colonne pleine
+                resIA = testIAPoserPion(data)
+                changerPionCouleur(resIA[0], data[2][1], resIA[1][0])
+                if resIA[1][1]:
+                    jeu = False
+                    window.update()
+                    messagebox.showinfo("Message de victoire", "L'ordinateur a gagné !")
+    else:
+        # message d'information : Appuier sur jouer pour lancer le jeu
+        messagebox.showinfo("Message du jeu", "Vous devez lancer le jeu pour pouvoir poser un pion")
+
+# - Fonction Undo -#
 def undo():
     pass
 
 def redo():
     pass
 
-#- Afficher message -#
-def afficheMessage():
-    pass
+def fermerFenetre():
+    deleteFrameGrille()
+    global window
+    window.destroy()
+
 
 if __name__ == "__main__":
     initIHM()
