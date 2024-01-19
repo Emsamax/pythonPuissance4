@@ -62,10 +62,11 @@ frameJeu = None
 atoutActive = False
 
 # Liste des images des pions
+here = os.getcwd()
 imgPions = [
-    Image.open("/Users/carineraffin-peyloz/Desktop/informatique/3A/pythonPuissance4/img/pion_jaune.jpeg"),
-    Image.open("/Users/carineraffin-peyloz/Desktop/informatique/3A/pythonPuissance4/img/pion_rouge.png"),
-    Image.open("/Users/carineraffin-peyloz/Desktop/informatique/3A/pythonPuissance4/img/pion_blanc.png")
+    Image.open(os.path.join(os.path.dirname(__file__),  "img/pion_jaune.jpeg")),
+    Image.open(os.path.join(os.path.dirname(__file__),  "img/pion_rouge.png")),
+    Image.open(os.path.join(os.path.dirname(__file__),  "img/pion_blanc.png"))
 ]
 
 

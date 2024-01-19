@@ -10,7 +10,8 @@ from Initialisation import *
 # -- Varibale Global Initialisation --#
 data: TData = initialisation(True)
 
-def jouer (data: TData, colonne: int) -> tuple:
+
+def jouer(data: TData, colonne: int) -> tuple:
     gagner = False
     joueurActuel: TJoueur
     if data[3]:
@@ -58,8 +59,7 @@ def plusBassePosition(data: TData, colonne: int) -> int:
     return hauteurGrilleActuelle
 
 
-
-def creerCoup(data: TData, joueur: TJoueur) -> TCoup:
+def creerCoup(data: TData, joueur: TJoueur, colonne: int) -> TCoup:
     """
        @brief Crée un coup à partir d'un joueur et d'une colonne. Le joueur joue dans cette colonne. Place le pion le
        plus bas possible dans la colonne. 0n suppose qu'il à été vérifié avant si il restait de la place dans cette colonne.
@@ -79,10 +79,6 @@ def creerCoup(data: TData, joueur: TJoueur) -> TCoup:
         print("coup effectué", pos)
         return coupActuel
     return []
-   
-
-
-
 
 
 def placerPion(data: TData, coup: TCoup) -> TData:
@@ -99,7 +95,7 @@ def placerPion(data: TData, coup: TCoup) -> TData:
     print("position : ", positions)
     joueur: TJoueur = coup[0]
     # le pion du joueur est à la position 1
-    #print("test : ", joueur)
+    # print("test : ", joueur)
     pion: str = str(joueur[1])
     grille[positions[0]][positions[1]] = pion
     # inversement de la valeur du bool qui indique si c'est au joueur non IA de jouer

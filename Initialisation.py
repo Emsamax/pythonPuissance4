@@ -35,15 +35,15 @@ def initialisation(jeuRapide: bool) -> TData:
 
 
 def initialiserTGrilleMat(nbLignes: int, nbColonnes: int) -> TGrilleMat:
- """
-       @brief Renvoie un type TGrilleMat initialisé en fonction du nombre de lignes et colonnes passées en paramètre.
+    """
+          @brief Renvoie un type TGrilleMat initialisé en fonction du nombre de lignes et colonnes passées en paramètre.
 
-       Si les deux valeurs sont 0, alors la grille est initialisée en 8x8.
+          Si les deux valeurs sont 0, alors la grille est initialisée en 8x8.
 
-       @param nbLignes: Le nombre de lignes de la grille.
-       @param nbColonnes: Le nombre de colonnes de la grille.
-       @return: La grille initialisée.
-  """
+          @param nbLignes: Le nombre de lignes de la grille.
+          @param nbColonnes: Le nombre de colonnes de la grille.
+          @return: La grille initialisée.
+     """
     res: TGrilleMat = []
     if (nbLignes & nbColonnes) != 0:
         for i in range(nbLignes):
