@@ -13,12 +13,15 @@
 
  @section Section importation
  Ce programme utilise les modules ci-dessous:
- from Initialisation import *
  import tkinter as tk
  from tkinter import messagebox
  from tkinter import ttk
  from PIL import ImageTk, Image
  import os
+ import time
+ from Jouer import jouer, data, coupSpecial
+ from IA import testIAPoserPion
+ from Initialisation import initialiserTGrilleMat
 """
 
 import tkinter as tk
@@ -30,6 +33,7 @@ import time
 from Jouer import jouer, data, coupSpecial
 from IA import testIAPoserPion
 from Initialisation import initialiserTGrilleMat
+
 
 # Fenêtre Tkinter
 window = tk.Tk()
@@ -74,14 +78,15 @@ imgPions = [
 # (Ajouter les menus avec Undo / Redo)
 def initIHM():
     """
-    Fonction qui initialise l'interface
-    1. initMenu : Initialise le menu, on passe la fenêtre tkinter en argument
-    2. Initialisation des varaibles stringVar, utiliser dans les labels de la section paramètre et section Jeu -> Atout
+    @brief Fonction qui initialise l'interface
+
+    @param initMenu : Initialise le menu, on passe la fenêtre tkinter en argument
+    @param Initialisation des varaibles stringVar, utiliser dans les labels de la section paramètre et section Jeu -> Atout
        Et utilisé pour leurs valeurs : la taille de la grille ; couleurs ; niveau de diffilculté
-    3. parametre : Initialisation de la section paramètres
-    4. jeuInit : Initialisation
-    5. On utilise la méthode mainloop pour démarer l'interface
-    :return:
+    @param parametre : Initialisation de la section paramètres
+    @param jeuInit : Initialisation
+    @param On utilise la méthode mainloop pour démarer l'interface
+    @return: None : ne retourne pas de valeur
     """
     # Initialise un objet Tkinter
     global window
@@ -104,17 +109,30 @@ def initIHM():
     tour = tk.StringVar(window, "Joueur 1")
     atoutNb = tk.StringVar(window, "1")
 
+    print(type(window))
     # Initialise la partie paramètre de l'interface
-    parametre(window, tailleGrille, couleurChoix, niveauChoix, tour, atoutNb)
+    parametre(window, tailleGrille, couleurChoix, niveauChoix)
 
     # Initialise la partie jeu avec la grille / les boutons de jeux (atout, lancer une partie)
-    jeuInit(window, tour, atoutNb)
+    jeuInit(window, tour, atoutNb,  tailleGrille, couleurChoix, niveauChoix)
 
     # Affichage Interface
     window.mainloop()
 
 
-def initMenu(self):
+def initMenu(self: tk.Tk) -> None:
+    """
+    @brief initMenu : Fonction d'initialisation du menu de l'interface
+
+    @section Fonctionnement détaillé
+    On retrouve 3 partie sous-menu :
+     - Undo : permet de revenir en arrière, appel la fonction undo dans IHM
+     - Redo : permet d'avancé vers un ancien undo, appel la fonction redo dans IHM
+     - Quitter : ferme la fenêtre de jeu
+
+    @param self: objet tkinter tk.Tkinter, fenêtre de l'interface
+    @return None
+    """
     menubar = tk.Menu(self)
 
     undoMenu = tk.Menu(menubar, tearoff=0)
@@ -132,7 +150,25 @@ def initMenu(self):
     self.config(menu=menubar)
 
 
-def parametre(self, tailleGrille, couleurChoix, niveauChoix, tour, atoutNb):
+def parametre(self: tk.Tk, tailleGrille: tk.StringVar, couleurChoix: tk.StringVar, niveauChoix: tk.StringVar) -> None:
+    """
+    @brief paramètre : Fonction d'initialisation de la partie paramètre de l'interface
+
+    @section Fonctionnement détaillé
+    On crée une frame principale "frame1" et on ajoute des éléments qui représente 3 grandes fonctionnalitées de paramétrages
+     - une partie gestion de la taille de la grille avec une liste déroulante
+     - une partie gestion de la couleur du joueur
+     - une partie niveau de jeu de l'ordinateur
+    À la fin de la frame on retrouve un bouton validation qui confirme la modifiécation des paramètres,
+    appel la fonction validation dans IHM
+    On utilise des objet tk.StringVar pour gérer le texte dynamique.
+
+    @param self: objet tkinter tk.Tkinter, fenêtre de l'interface
+    @param tailleGrille : objet tkinter tk.StringVar, taille de la grille de jeu
+    @param couleurChoix : objet tkinter tk.StringVar, couleur du pion du joueur
+    @param niveauChoix : objet tkinter tk.StringVar, niveau de l'IA
+    @return None
+    """
     frame1 = tk.Frame(self, width=262, height=525, bg="#D9D9D9")
     frame1.pack_propagate(False)
     frame1.pack(side='left', padx=20)
@@ -180,7 +216,6 @@ def parametre(self, tailleGrille, couleurChoix, niveauChoix, tour, atoutNb):
     niveauBtn3.pack(anchor='w', padx=(60, 0))
 
     # Bouton validation
-    # (Ajouter commande de validation des paramètre)
     btnvalidation = tk.Button(frame1, text="Valider",
                               bg="#D9D9D9", highlightthickness=1, highlightbackground="#D9D9D9",
                               font="TkDefaultFont 16",
@@ -188,7 +223,25 @@ def parametre(self, tailleGrille, couleurChoix, niveauChoix, tour, atoutNb):
     btnvalidation.pack(side='bottom', padx=10, pady=(0, 40))
 
 
-def jeuInit(self, tour, atoutNb):
+def jeuInit(self: tk.Tk, tour: tk.StringVar, atoutNb: tk.StringVar,  tailleGrille, couleurChoix, niveauChoix) -> None:
+    """
+    @brief paramètre : Fonction d'initialisation de la partie paramètre de l'interface
+
+    @section Fonctionnement détaillé
+    On crée une frame principale "frame2" et on ajoute des éléments qui représente 3 grandes fonctionnalitées de paramétrages
+     - une partie affichage de la grille (*)
+     - une partie gestion des commande de jeu avec le lancement du jeu et la gestion du coup spécial
+    On utilise des objet tk.StringVar pour gérer le texte dynamique.
+
+    @section (*) Détaile  partie affichage grille :
+    On utilise une variable global frame "frameJeu" qui contient nxm image de pion et représente la grille de jeu.
+
+    @param self: objet tkinter tk.Tkinter, fenêtre de l'interface
+    @param tailleGrille : objet tkinter tk.StringVar, taille de la grille de jeu
+    @param couleurChoix : objet tkinter tk.StringVar, couleur du pion du joueur
+    @param niveauChoix : objet tkinter tk.StringVar, niveau de l'IA
+    @return None
+    """
     global frameJeu
 
     frame2 = tk.Frame(self, width=650, height=600, bg="#D9D9D9")
@@ -209,8 +262,9 @@ def jeuInit(self, tour, atoutNb):
 
     # Bouton Jeu / Ajout
     # (Ajouter commande de validation des paramètre)
-    btnJeu = tk.Button(frame2, text="Joueur", bg="#D9D9D9",
-                       highlightthickness=1, highlightbackground="#D9D9D9", font="TkDefaultFont 16", command=jouerCmd)
+    btnJeu = tk.Button(frame2, text="Joueur",
+                       bg="#D9D9D9",highlightthickness=1, highlightbackground="#D9D9D9",
+                       font="TkDefaultFont 16", command=lambda: jouerCmd(tailleGrille, couleurChoix, niveauChoix))
     btnJeu.pack(side='left', padx=10, pady=20)
     btnAtout = tk.Button(frame2, text="Jouer Atout",
                          bg="#D9D9D9", highlightthickness=1, highlightbackground="#D9D9D9",
@@ -228,8 +282,12 @@ def jeuInit(self, tour, atoutNb):
     atoutLabel.pack(side='left', padx=(1, 10), pady=20)
 
 
-# À Faire
-def initGrille():
+def initGrille() -> None:
+    """
+    @brief initGrille : Fonction d'initialisation de la grille côté interface
+
+    @return: None
+    """
     # frameGrille : taille 375x375
     # On récupère le nombre de ligne et de colonne
     # On les converti en nombre (int)
@@ -239,9 +297,7 @@ def initGrille():
 
     newSize = (int(375 / nbColonne), int(375 / nbLigne))
 
-    # Import l'image des pions vide
-    # Utilisation de la librairie PIL pour pouvoir utiliser les images avec tkinter
-    # Met un objet Image (de la librairie PIL) dans la variable image (ouvre l'image)
+    # Récupère l'image des pions blanc
     image = imgPions[2]
     # On redimensionne l'image selon le nombre de colonne et de ligne
     image = image.resize(newSize)
@@ -266,7 +322,7 @@ def initGrille():
         listeLabelGrille.append(listLabel)
 
 
-def deleteFrameGrille():
+def deleteFrameGrille() -> None:
     """
     Fonction qui vide la frame de la grille :
      - supprime les boutons pour poser les pions
@@ -278,13 +334,17 @@ def deleteFrameGrille():
 
 
 # - Commande / action des boutons de la frame des paramètres -#
-def validationParametre(tailleGrille, couleurChoix, niveauChoix):
+def validationParametre(tailleGrille: tk.StringVar, couleurChoix: tk.StringVar, niveauChoix: tk.StringVar) -> None:
     """
-    Fonction qui valide les paramètres et mets à jour les variables
-     - taille de grille
-     - couleur du pion du joueur
-     - niveau de l'IA
-    :return: none
+    @brief Fonction qui valide les paramètres et mets à jour les paramètres de jeu
+
+    @section Fonctionnement détaillé
+
+
+    @param tailleGrille : objet tkinter tk.StringVar, taille de la grille de jeu
+    @param couleurChoix : objet tkinter tk.StringVar, couleur du pion du joueur
+    @param niveauChoix : objet tkinter tk.StringVar, niveau de l'IA
+    @return: none
     """
     # Il faut changer la grille de data si changement de nbLigne et nbColonne
     global listeLabelGrille
@@ -328,48 +388,81 @@ def validationParametre(tailleGrille, couleurChoix, niveauChoix):
 
 
 # - Commande des boutons de la frame de Jeu -#
-def jouerCmd():
+def jouerCmd(tailleGrille, couleurChoix, niveauChoix) -> None:
     """
-    Fonction qui lance le jeu lorsque le joueur appuie sur le btn jouer
-    :return:
+    @brief Fonction qui lance le jeu lorsque le joueur appuie sur le btn jouer
+
+    @section Variables globales :
+     - global jeu :
+     - global nbLigne
+     - global nbColonne
+     - global listeLabelGrille
+
+    @section Fonctionnement détaillé :
+    La fonction commence par mettre à jour l'état du jeu (varaible "jeu")
+    Puis, on initialise la grille de jeu, car en cas de 2ème partie concécutive il faut réinitialisé la grille.
+    C'est-à-dire, que l'on initialise la grille de la varaible "data" et la  grille de l'interface "listeLabelGrille"
+    Enfin, on affiche un message de confirmation et c'est le début de la partie.
+    @return: None
     """
     global jeu
+    global nbLigne
+    global nbColonne
+    global listeLabelGrille
+
     if not jeu:
         jeu = True
+        # Si le joueur joue pour la 2-ème fois on réinitialise l'interface
+        data[0] = initialiserTGrilleMat(nbLigne, nbColonne)
+        # - Partie réinitialisation Grille -#
+        # Vide listeLabelGrille
+        listeLabelGrille = []
+        # Vide la frame de la grille
+        deleteFrameGrille()
+        # Réinitialise la frame de la grille avec les bonnes dimensions
+        initGrille()
+        # Rafraichie l'interface
+        window.update()
+        # Message de confirmation de début de partie
         messagebox.showinfo("Message du jeu", "Que le meilleur gagne !!")
 
 
-
-def jouerAtout(atoutNb):
+def jouerAtout(atoutNb) -> None:
     """
-    Fonction qui permet d'activé l'atout (jouer l'atout)
+    @brief Fonction qui permet d'activé l'atout
     Ne peut être activé que si le nombre d'atout est différent de 0
-    :return:
+    @return: None
     """
     global jeu
     global atoutActive
 
+    # jeu lancé ?
     if jeu:
+        # Si l'atout n'est pas encore joué
         if atoutNb.get() == "1":
             # L'atout est activé
             atoutActive = True
             # Met le nombre d'atout à 0
             atoutNb.set("0")
         else:
+            # l'atout a déjà été joué
             messagebox.showinfo("Message du jeu", "Vous n'avez plus d'atout")
     else:
+        # le jeu n'a pas été lancé
         messagebox.showinfo("Message du jeu", "Lancer le jeu pour jouer votre atout")
 
 
-def AnunulerJouerAtout(atoutNb):
+def AnunulerJouerAtout(atoutNb) -> None:
     """
-    Fonction qui permet d'annuler l'utilisation de l'atout
-    Ne peut être activé que si le nombre d'atout est de 1 (différent de 0)
-    Et si la fonction jouerAtout a été exécuté
-    :return:
+    @brief Fonction qui permet d'annuler l'utilisation de l'atout.
+
+    @section
+    Ne peut être activé que si le nombre d'atout est de 0 et si la fonction jouerAtout a été exécuté
+
+    @params atoutNb: tk.StringVar, objet tkinter, contient le nombre d'atout du joueur
+    @return: None
     """
     global atoutActive
-
     # Si l'atout est activé alors on le désactive sinon c'est qu'il n'est pas activé
     if atoutActive:
         # Annuler l'atout
@@ -379,7 +472,29 @@ def AnunulerJouerAtout(atoutNb):
 
 # -- Action des boutons de jeux de pions sur la grille --#
 
-def changerPionCouleur(colonne, couleur, ligne):
+def changerPionCouleur(colonne: int,  ligne: int, couleur: str) -> None:
+    """
+    @brief Fonction changerPionCouleur permet de changer la couleur d'un pion de coordonnées (ligne, colonne)
+     en un pion de couleur spécifié dans les paramètres.
+
+    @section Variable global :
+     - global listeLabelGrille : Tableau 2D de label, contenant les images des pions (même taille que la grille)
+     - global nbLigne : entier, le nombre de ligne de la grille
+     - global nbColonne : entier, le nombre de colonne de la grille
+     - global imgPions : Tableau 1D d'objet Image de la bibliothèque Pillow
+
+    @section Fonctionnement détaillé :
+    La fonction commence par calculer la dimension "newsize" des images en fonction des lignes et colonnes
+    Puis, on teste la valeur de la couleur donnée en paramètre pour récupérer la bonne image de pion
+    Enfin, on redimensionne l'image, on transforme l'objet Image en un objet ImageTk compatible avec tkinter
+    et on modifie la configuration et la valeur du label stocké dans la liste "listeLabelGrille".
+
+    @param colonne: Colonne du pion (coordonée y)
+    @param ligne: Linge du pion (coordonée x)
+    @param couleur: Couleur du nouveau pion parmis jaune ('o'),
+    rouge ('x') ou blanc ('.' ou autre) pour le cas de l'atout
+    @return: None
+    """
     # Appel des variable global
     global listeLabelGrille
     global nbLigne
@@ -408,41 +523,75 @@ def changerPionCouleur(colonne, couleur, ligne):
     listeLabelGrille[colonne][ligne].image = img
 
 
-def poserPion(colonne: int):
+def poserPion(colonne: int) -> None:
+    """
+    @brief Fonction exécuté après l'activation d'un des boutons pour poser les pions '\/'
+
+    @section Variable global :
+     - global jeu : Booléen, si Vrai alors le jeu a commencé sinon le jeu n'est pas lancé
+     - global atoutActive : Booléen, Vrai si un joueur veut utilisé son atout
+     - global window : tk.Tkinter, objet tkinter, fenêtre de l'interface
+
+    @section Fonctionnement détaillé :
+    La fonction commence par vérifier si le jeu est lancé sinon on ne peut pas poser de pion
+    et on reçoit un message d'information.
+    Puis, on vérifie si le coup est un coup spécial. Si oui, on supprime les pions de la colonne.
+    Ensuite, on joue le coup du joueur en appelant la fonction "jouer" qui retourne un tuple avec
+    le coup du joueur (colonne et ligne sur la grille) et l'état de victoire (booléen).
+    Mais si le tuple est vide alors le coup n'est pas valide et on attend le nouveau coup du joueur.
+    Puis, si les vérifications sont valides, on pose le pion dans l'interface avec la fonction "changerPionCouleur"
+    Et on test le cas de victoire.
+
+
+
+    Enfin, on pose le pion du joueur puis celui de l'IA avec une des vérifications
+    de victoire et de colonne pleine
+    @param colonne: entier, correspond à la colonne du pion à poser
+    @return: None
+    """
     # Variable jeu permet de lancer le jeu en appyant sur le boutton jouer
     global jeu
     global atoutActive
     global window
+
     # Si le jeu est lancé alors on peut poser un pion sinon impossible
     if jeu:
         if atoutActive:
-            #On joue le coup spécial (Atout)
+            # On joue le coup spécial (Atout) et modifie la varaible data
             coupSpecial(data, colonne)
-
+            # On modifie le grille de l'IHM
             for i in range(len(listeLabelGrille)):
-                changerPionCouleur(colonne, '.', i)
+                # Change les pions de couleur par du vide (pion blanc)
+                changerPionCouleur(colonne, i, '.')
             atoutActive = False
 
         # On joue le coup du joueur
         res = jouer(data, colonne)
+        # Si le coup a pu être joué, on peut poser le pion dans la grille
         if res != ():
             # On change la couleur du pion
-            print("Couleur joueur : ", data[3])
-            changerPionCouleur(colonne, data[1][1], res[0])
+            changerPionCouleur(colonne, res[0], data[1][1])
             # Joueur a gagné ?
             if res[1]:
+                # Si oui alors le jeu s'arrête
                 jeu = False
+                # Rafraîchir L'interface pour que le pion se pose avant le message
                 window.update()
-                messagebox.showinfo("Message de victoire", "Le Joueur __ a gagné !")
-
+                # Message d'information de victoire
+                messagebox.showinfo("Message de victoire", "Vous avez gagné !")
             # Autour de l'IA
             else:
-                # Juste tester si l'IA joue dans une colonne pleine
+                # Le coup de l'IA, venant de l'algorithme minmax
                 resIA = testIAPoserPion(data)
-                changerPionCouleur(resIA[0], data[2][1], resIA[1][0])
+                # On pose le pion de l'IA
+                changerPionCouleur(resIA[0], resIA[1][0], data[2][1])
+                # Victoire de l'ordinateur ?
                 if resIA[1][1]:
+                    # Si oui le jeu s'arrête
                     jeu = False
+                    # Rafraîchir L'interface pour que le pion se pose avant le message
                     window.update()
+                    # Message de victoire
                     messagebox.showinfo("Message de victoire", "L'ordinateur a gagné !")
     else:
         # message d'information : Appuier sur jouer pour lancer le jeu
@@ -452,14 +601,17 @@ def poserPion(colonne: int):
 def undo():
     pass
 
+# - Fonction Redo -#
 def redo():
     pass
 
 def fermerFenetre():
+    # On supprime les images de la grille
     deleteFrameGrille()
+    # On ferme la fenêtre Tkinter
     global window
     window.destroy()
 
-
+#- Test IHM -#
 if __name__ == "__main__":
     initIHM()
