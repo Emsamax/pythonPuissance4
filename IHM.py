@@ -242,7 +242,7 @@ def initGrille():
     # Import l'image des pions vide
     # Utilisation de la librairie PIL pour pouvoir utiliser les images avec tkinter
     # Met un objet Image (de la librairie PIL) dans la variable image (ouvre l'image)
-    image = Image.open("/Users/carineraffin-peyloz/Desktop/informatique/3A/pythonPuissance4/img/pion_blanc.png")
+    image = imgPions[2]
     # On redimensionne l'image selon le nombre de colonne et de ligne
     image = image.resize(newSize)
     # On crée un objet ImageTk compatible avec tkinter pour l'affichage

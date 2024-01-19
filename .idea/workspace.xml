@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6613adc-ec75-4b1a-95e6-0268d88569af" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/pythonPuissance4.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pythonPuissance4.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EntreesSorties.py" beforeDir="false" afterPath="$PROJECT_DIR$/EntreesSorties.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Initialisation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Initialisation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jouer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Jouer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Types.py" beforeDir="false" afterPath="$PROJECT_DIR$/Types.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IHM.py" beforeDir="false" afterPath="$PROJECT_DIR$/IHM.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Verification.py" beforeDir="false" afterPath="$PROJECT_DIR$/Verification.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +54,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;comments&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Martin/OneDrive/Documents/GitHub/pythonPuissance4&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -171,6 +167,7 @@
       <workItem from="1705413268891" duration="3030000" />
       <workItem from="1705416397864" duration="912000" />
       <workItem from="1705648751065" duration="1934000" />
+      <workItem from="1705653568912" duration="4240000" />
     </task>
     <servers />
   </component>
@@ -208,11 +205,13 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Initialisation_py$IHM.coverage" NAME="IHM Coverage Results" MODIFIED="1705653521409" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythonPuissance4$Jouer.coverage" NAME="Jouer Coverage Results" MODIFIED="1703069914317" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythonPuissance4$IHM.coverage" NAME="IHM Coverage Results" MODIFIED="1705658317519" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythonPuissance4$Verification.coverage" NAME="Verification Coverage Results" MODIFIED="1703069962504" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythonPuissance4_iml$Main_py.coverage" NAME="Main.py Coverage Results" MODIFIED="1705333993974" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/pythonPuissance4$Main.coverage" NAME="Main Coverage Results" MODIFIED="1703070026570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythonPuissance4$Main_py.coverage" NAME="Main.py Coverage Results" MODIFIED="1705333165290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/pythonPuissance4_iml$IHM.coverage" NAME="IHM Coverage Results" MODIFIED="1705415798927" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythonPuissance4_iml$IHM.coverage" NAME="IHM Coverage Results" MODIFIED="1705652032846" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

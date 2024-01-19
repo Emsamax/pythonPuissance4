@@ -4,7 +4,6 @@
     est valide ou non.
 """
 
-
 from Types import *
 from EntreesSorties import *
 
@@ -23,6 +22,7 @@ def victoire(grille: TGrilleMat, dernierCoupJoue: TCoup) -> bool:
         return True
     else:
         return False
+
 
 # verifie si à partir du pion joué si il est gagnant sur la colonne
 def verifierVictoireColonne(grille: TGrilleMat, dernierCoupJoue: TCoup) -> bool:
@@ -105,13 +105,17 @@ def verifierVictoireDiagonale1(grille: TGrilleMat, dernierCoupJoue: TCoup) -> bo
     posYFinale: int = -1
     # on cherche la case la plus en haut à gauche du dernier coup joué à max de 3 cases
     for i in range(3):
-        # je peux aller à gauche?
-        if posY - 1 >= 0:
+        if ((posX) >= 1) & ((posY) >= 1):
+            posX -= 1
             posY -= 1
-            # si oui je monte
-            if posX - 1 > 0:
-                posX -= 1
-
+            print("position diagonale haut gauche : ", posX, posY, " tour de boucle : ", i)
+        # je peux aller à gauche?
+        # if posY - 1 >= 0:
+        #    posY -= 1
+        #    # si oui je monte
+        #    if posX - 1 > 0:
+        #        posX -= 1
+    print("position diagonale haut gauche : ", posX, posY)
     posXFinale = posX
     posYFinale = posY
     # on part de la position la plus en haut à gauche de la diagonale
@@ -123,6 +127,8 @@ def verifierVictoireDiagonale1(grille: TGrilleMat, dernierCoupJoue: TCoup) -> bo
     while (positionActuelleX + distance < len(grille[0])) & (positionActuelleY + distance < len(grille[1])):
         if grille[positionActuelleX + distance][positionActuelleY + distance] == pion:
             compteur += 1
+            print("================================ compteur gauche à droite : ", compteur)
+            # il y a deja le pion joué dans la diagonale
             if compteur == 4:
                 victoire = True
         else:
@@ -153,12 +159,15 @@ def verifierVictoireDiagonale2(grille: TGrilleMat, dernierCoupJoue: TCoup) -> bo
     posYFinale: int = -1
     # on cherche la case la plus en haut à  droite du dernier coup joué à max de 3 cases
     for i in range(3):
-        # je peux aller à droite?
-        if posY + 1 < len(grille[1]):
+        if (posX>=1) & ((posY) < len(grille[1])-1):
+            posX -= 1
             posY += 1
-            # si oui je monte
-            if posX - 1 > 0:
-                posX -= 1
+        # je peux aller à droite?
+        # if posY + 1 < len(grille[1]):
+        #   posY += 1
+        #    # si oui je monte
+        #    if posX - 1 > 0:
+        #       posX -= 1
     posXFinale = posX
     posYFinale = posY
 
@@ -168,12 +177,13 @@ def verifierVictoireDiagonale2(grille: TGrilleMat, dernierCoupJoue: TCoup) -> bo
     positionActuelleX: int = posXFinale
     positionActuelleY: int = posYFinale
     # parcour de la diagonale en haut a droite vers en bas a gauche
-    while (positionActuelleX + distance < len(grille[0])) & (positionActuelleY - distance > 0):
+    while (positionActuelleX + distance < len(grille[0])) & (positionActuelleY - distance >= 0):
         print("distance", distance)
         print(positionActuelleX + distance, positionActuelleY - distance)
         if grille[positionActuelleX + distance][positionActuelleY - distance] == pion:
             compteur += 1
-            print("compteur = ", compteur)
+            print("================================ compteur droite à gauche : ", compteur)
+            # il y a deja le pion joué dans la diagonale
             if compteur == 4:
                 victoire = True
         else:
