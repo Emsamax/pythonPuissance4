@@ -46,16 +46,16 @@ def initialiserTGrilleMat(nbLignes: int, nbColonnes: int) -> TGrilleMat:
      """
     res: TGrilleMat = []
     if (nbLignes & nbColonnes) != 0:
-        for i in range(nbLignes):
+        for uiboucle in range(nbLignes):
             res.append(['.' for _ in range(nbColonnes)])
         return res
     else:
-        for i in range(8):
+        for uiboucle in range(8):
             res.append(['.' for _ in range(8)])
         return res
 
 
-def initialiserJoueur(saisieManuel: bool) -> TJoueur:
+def initialiserJoueur(bsaisieManuel: bool) -> TJoueur:
     """
        @brief Initialise un joueur, possibilité de saisir les valeurs à l'initialisation.
 
@@ -63,7 +63,7 @@ def initialiserJoueur(saisieManuel: bool) -> TJoueur:
        @return: Le joueur initialisé.
        """
     res: TJoueur = []
-    if saisieManuel:  # cas ou on demande manuelement à l'utilisateur si il veut un coup sepcial et son pion
+    if bsaisieManuel:  # cas ou on demande manuelement à l'utilisateur si il veut un coup sepcial et son pion
         listInfoJoueur: list[bool, str] = initialisationManueleJoueur()
         res.append(listInfoJoueur[0])
         res.append(listInfoJoueur[1])
@@ -76,7 +76,7 @@ def initialiserJoueur(saisieManuel: bool) -> TJoueur:
         return res
 
 
-def initialiserJoueurIA(saisieManuel: bool) -> TJoueur:
+def initialiserJoueurIA(bsaisieManuel: bool) -> TJoueur:
     """
         @brief Initialise un joueur IA, possibilité de saisir les valeurs à l'initialisation.
 
@@ -84,7 +84,7 @@ def initialiserJoueurIA(saisieManuel: bool) -> TJoueur:
         @return: Le joueur IA initialisé.
     """
     res: TJoueur = []
-    if saisieManuel:  # cas ou on demande manuelement à l'utilisateur si il veut que l'ia ait un coup sepcial et
+    if bsaisieManuel:  # cas ou on demande manuelement à l'utilisateur si il veut que l'ia ait un coup sepcial et
         # son pion
         listInfoJoueurIa: list[bool, str, int] = initialisationManueleJoueurIA()
         res.append(listInfoJoueurIa[0])

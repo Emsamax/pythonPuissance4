@@ -11,12 +11,12 @@ def initialisationManueleJoueur() -> list[bool, str]:
 
       @return: Liste contenant un booléen indiquant s'il veut un coup spécial et un caractère pour son pion.
     """
-    res = list()
+    lres = list()
     saisieBool = input("Voulez vous avoir 1 coup special au cours de la partie ? 1 oui 0 sinon")
-    res.append(bool(int(saisieBool)))
+    lres.append(bool(int(saisieBool)))
     saisiePion = input("Saisisez 1 caractere comme pion")
-    res.append(saisiePion)
-    return res
+    lres.append(saisiePion)
+    return lres
 
 
 def initialisationManueleJoueurIA() -> list[bool, str, int]:
@@ -25,14 +25,14 @@ def initialisationManueleJoueurIA() -> list[bool, str, int]:
 
        @return: Liste contenant un booléen indiquant s'il veut un coup spécial, un caractère pour le pion de l'IA et le niveau de difficulté.
     """
-    res = list()
+    lres = list()
     saisieBool = input("Voulez vous que l'ia ait 1 coup special au cours de la partie ? 1 oui 0 sinon")
-    res.append(bool(int(saisieBool)))
+    lres.append(bool(int(saisieBool)))
     saisiePion = input("Saisisez 1 caractere comme pion pour l'ia")
-    res.append(saisiePion)
+    lres.append(saisiePion)
     saisieDifficulte = input("Saisisez saisisez le niveau de difficulté")
-    res.append(int(saisieDifficulte))
-    return res
+    lres.append(int(saisieDifficulte))
+    return lres
 
 
 def saisirTailleMat() -> list[int]:
@@ -43,19 +43,19 @@ def saisirTailleMat() -> list[int]:
 
        @return: Liste contenant le nombre de lignes et de colonnes saisis.
        """
-    res: list[int] = list()
+    lres: list[int] = list()
     valide = False
     while not valide:
         entreeNbLignes = input("saisir nb lignes de la grille")
-        res.append(int(entreeNbLignes))
+        lres.append(int(entreeNbLignes))
         entreeNbColonnes = input("saisir nb colonnes de la grille")
-        res.append(int(entreeNbColonnes))
-        if res[0] <= 0 | res[1] <= 0:
+        lres.append(int(entreeNbColonnes))
+        if lres[0] <= 0 | lres[1] <= 0:
             print("Erreur : La grille ne peut pas etre sous la forme 0*X ")
-            res.clear()
+            lres.clear()
         else:
             valide = True
-    return res
+    return lres
 
 
 def afficherErreurSaisieColonne(colonne: int) -> None:
