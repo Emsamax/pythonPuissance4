@@ -30,10 +30,12 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 import os
 import time
-from Jouer import jouer, data, coupSpecial
-from IA import testIAPoserPion
-from Initialisation import initialiserTGrilleMat
 
+from EntreesSorties import afficherEtatJeu
+from Jouer import jouer, data, coupSpecial
+from IA import testIAPoserPion, minMax
+from Initialisation import initialiserTGrilleMat
+from Types import TData, TCoup
 
 # Fenêtre Tkinter
 window = tk.Tk()
@@ -48,9 +50,10 @@ listeLabelGrille = []
 # ! Variable à modifier car init dans le fichier initialisation.py et son contenu dans des "structures"
 # => il faudra importer la "structure" et se sera cet "structure" qui sera modifié
 # Taille de la grille nbLigne x nbColonne
+
 nbLigne = len(data[0])
 nbColonne = len(data[0][0])
-
+print(nbLigne, nbColonne)
 # !
 
 # - Variable de jeu -#
@@ -579,20 +582,44 @@ def poserPion(colonne: int) -> None:
                 window.update()
                 # Message d'information de victoire
                 messagebox.showinfo("Message de victoire", "Vous avez gagné !")
-            # Autour de l'IA
+            # Au tour de l'IA
             else:
                 # Le coup de l'IA, venant de l'algorithme minmax
-                resIA = testIAPoserPion(data)
-                # On pose le pion de l'IA
-                changerPionCouleur(resIA[0], resIA[1][0], data[2][1])
-                # Victoire de l'ordinateur ?
-                if resIA[1][1]:
-                    # Si oui le jeu s'arrête
-                    jeu = False
-                    # Rafraîchir L'interface pour que le pion se pose avant le message
-                    window.update()
-                    # Message de victoire
-                    messagebox.showinfo("Message de victoire", "L'ordinateur a gagné !")
+                dernierCoup: TCoup = res[3]
+                data2 = res[-1]
+
+                #               data  , profondeur , JoueurIA    , dernierCoup
+                lesCoups: list[TCoup] = []
+                resIA = minMax(res[-1], 3, data2[1], dernierCoup, lesCoups)
+                #le min max nous à renvoyé le pion à poser
+
+                print("retour du min max", resIA)
+                #input()
+
+                if isinstance(resIA, tuple) and len(resIA) == 3:
+
+                    coupAjouer: TCoup = resIA[2][1]
+                    #coupIA: TCoup = coupFinal
+                    print("LE COUP A JOUER")
+                    print(coupAjouer)
+                    coord: list[int] = coupAjouer[1]
+                    ligneIA: int = coord[0]
+
+                    colonneIA: int = coord[1]
+                    print("colonne du coup à jouer IHM", colonneIA)
+                    print("ligne du coup à jouer IHM", ligneIA)
+                    res = jouer(data, colonneIA)
+                    print("jeu apres IA")
+                    afficherEtatJeu(data)
+                    changerPionCouleur(colonneIA, ligneIA, res[2][1])
+                    # Victoire de l'ordinateur ?
+                    if res[1]:
+                        # Si oui le jeu s'arrête
+                        jeu = False
+                        # Rafraîchir L'interface pour que le pion se pose avant le message
+                        window.update()
+                        # Message de victoire
+                        messagebox.showinfo("Message de victoire", "L'ordinateur a gagné !")
     else:
         # message d'information : Appuier sur jouer pour lancer le jeu
         messagebox.showinfo("Message du jeu", "Vous devez lancer le jeu pour pouvoir poser un pion")
